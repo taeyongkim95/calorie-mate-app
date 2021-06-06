@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TouchableHighlight} from "react-native";
+import { StyleSheet, Text, SafeAreaView, TouchableHighlight} from "react-native";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TouchableHighlight style={styles.button}>
-        <Text>Ok</Text>
+        <Text>Add</Text>
       </TouchableHighlight>
-    </View>
+    </SafeAreaView>
   );
 };
 

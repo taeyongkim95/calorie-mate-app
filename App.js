@@ -3,6 +3,7 @@ import { NavigationContainer, StackActions} from '@react-navigation/native';
 import { createStackNavigator} from '@react-navigation/stack';
 
 import WelcomeScreen from "./screens/WelcomeScreen";
+import AddFoodScreen from "./screens/AddFoodScreen";
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
         screenOptions={{
           headerShown:false
         }}>
+          <Stack.Screen name="Add Food" component={AddFoodScreen}/>
           <Stack.Screen name="Welcome" component={WelcomeScreen}/>
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,0 +1,1 @@
+export var calorieId = "urn:uuid:a4d01e46-5df2-4cb3-ad2c-6b438e79e5b9";
