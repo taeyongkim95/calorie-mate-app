@@ -6,7 +6,7 @@ const FoodAnalysisScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text>{food}</Text>
+        <Text style={styles.text}>{food}</Text>
     </SafeAreaView>
   );
 };
@@ -17,15 +17,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3eb489',
     justifyContent:'center',
     alignItems:'center',
-    fontFamily:'San Francisco'
-  },
-  button: {
-    height:150,
-    width:150,
-    borderRadius:75,
-    backgroundColor:'#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
 

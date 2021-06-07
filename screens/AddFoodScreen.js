@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, SafeAreaView, TouchableHighlight, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, TouchableWithoutFeedback, TouchableHighlight} from "react-native";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Autocomplete from 'react-native-autocomplete-input';
 import { FoodServer } from '../api/FoodServer';
 
 const AddFoodScreen = ({navigation}) => {
+
   const [searchQuery, setSearchQuery] = useState('');
   const [foods, setFoods] = useState([]);
   const [selectedValue, setSelectedValue] = useState({});
@@ -37,43 +39,46 @@ const AddFoodScreen = ({navigation}) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => setShowList(false)}>
       <SafeAreaView style={styles.container}>
-        <Autocomplete 
-          autoCapitalize="none"
-          autoCorrect={false}
-          data={
-            showList == true ? foods : []
-          }
-          value={searchQuery}
-          onChangeText={(text)=>fetchData(text)}
-          placeholder={placeholder}
-          style={styles.input}
-          inputContainerStyle={styles.inputContainer}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => {
-                console.log("yo");
-                setSearchQuery(item);
-              }}
-              style={styles.itemText}
-              >
-              <Text>
-                  {item.title}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-        <TouchableOpacity 
-          onPress={() => {
-            navigation.navigate('Food Analysis', {
-              searchQuery
-            })
-          }}>
-          <Text>I ate this</Text>
-        </TouchableOpacity>
+        <View style={styles.inputAndButton}>
+          <Autocomplete 
+            autoCapitalize="none"
+            autoCorrect={false}
+            data={foods}
+            OnFocus={() => setShowList(true)}
+            onBlur={() => setShowList(false)}
+            value={searchQuery}
+            onChangeText={(text)=>fetchData(text)}
+            placeholder={placeholder}
+            style={styles.input}
+            inputContainerStyle={styles.inputContainer}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                onPress={() => {
+                  console.log("yo");
+                  setSearchQuery(item);
+                }}
+                style={styles.itemText}
+                >
+                <Text>
+                    {item.title}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+
+          <TouchableHighlight 
+            onPress={() => {
+              navigation.navigate('Food Analysis', {
+                searchQuery
+              })
+            }}
+            style={styles.button}>
+            <Text style={{color:'white'}}>I ate this</Text>
+          </TouchableHighlight>
+
+        </View>
       </SafeAreaView>
-    </TouchableWithoutFeedback>
   )
 };
 
@@ -84,6 +89,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center'
   },
+  inputAndButton: {
+    zIndex:7000,
+    flexDirection: 'row',
+    position:'absolute'
+  },
   inputContainer: {
     borderWidth: 0,
     alignSelf: 'center'
@@ -92,11 +102,21 @@ const styles = StyleSheet.create({
     borderRadius:8,
     padding:10,
     backgroundColor: 'white',
-    borderWidth:0
+    borderWidth:0,
+    flex:5,
+    fontFamily: 'OpenSans_400Regular',
+    zIndex:6000
   },
   itemText: {
-    fontSize:24,
-    zIndex:7000
+    zIndex:7000,
+    position:'absolute'
+  },
+  button: {
+    flex:1,
+    padding:10,
+    borderRadius:8,
+    backgroundColor:'#1B4E3B',
+    marginLeft:10
   }
 });
 
