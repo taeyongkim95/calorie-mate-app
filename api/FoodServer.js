@@ -3,7 +3,7 @@ import { FOOD_APP_KEY, FOOD_API_KEY } from './FoodKey';
 import axios from 'axios';
 import { returnQuery } from '../screens/AddFoodScreen';
 
-const FoodServer = axios.create({
+export const FoodServer = axios.create({
   baseURL: 'https://trackapi.nutritionix.com/v2/',
 });
 
@@ -17,13 +17,6 @@ FoodServer.interceptors.request.use(
     return Promise.reject(err);
   }
 );
-
-export const getFoods = async (callback) => {
-  const response = await FoodServer.get(
-    `search/instant?query=`
-  );
-  callback(response.data);
-}
 
 export const getCalories = async (callback) => {
   const response = await FoodServer.post()
