@@ -1,7 +1,5 @@
-import { AsyncStorage } from 'react-native';
 import { FOOD_APP_KEY, FOOD_API_KEY } from './FoodKey';
 import axios from 'axios';
-import { returnQuery } from '../screens/AddFoodScreen';
 
 export const FoodServer = axios.create({
   baseURL: 'https://trackapi.nutritionix.com/v2/',

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableWithoutFeedback, TouchableHighlight} from "react-native";
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Autocomplete from 'react-native-autocomplete-input';
+import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity} from "react-native";
+import { Input } from 'react-native-elements';
 import { FoodServer } from '../api/FoodServer';
 
 const AddFoodScreen = ({navigation}) => {
@@ -10,73 +9,66 @@ const AddFoodScreen = ({navigation}) => {
   const [foods, setFoods] = useState([]);
   const [selectedValue, setSelectedValue] = useState({});
   const placeholder = "What did you eat?";
-  const [showList, setShowList] = useState(false);
-
-  // useEffect(() => {
-  //   getFoods((data)=> {
-  //     console.log('received: ', data.common);
-  //     setFoods(data.common.map(data => (data.food_name)));
-  //   });
-  // }, [searchQuery]);
-
-
-  // const getFoods =  async (callback) => {
-  //   const response = await FoodServer.get(
-  //     `search/instant?query=${searchQuery}`
-  //   );
-  //   callback(response.data);
-  // }
 
   const fetchData = (e) => {
-    setShowList(true);
     setSearchQuery(e);
     FoodServer.get(
       `search/instant?query=${e}`
     ).then((response)=> {
-      console.log(searchQuery);
-      setFoods(response.data.common.map(data => (data.food_name)));
+      setFoods(response.data.common);
     })
   }
 
+  const renderFoodList = ({item}) => {
+    console.log(item);
+    <TouchableOpacity
+      onPress={() => {
+        console.log("yo");
+      }}
+      style={styles.itemText}
+    >
+        <Text>
+            {item.food_name}
+        </Text>
+    </TouchableOpacity>
+  };
+
   return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputAndButton}>
-          <Autocomplete 
-            autoCapitalize="none"
-            autoCorrect={false}
-            data={foods}
-            OnFocus={() => setShowList(true)}
-            onBlur={() => setShowList(false)}
-            value={searchQuery}
-            onChangeText={(text)=>fetchData(text)}
-            placeholder={placeholder}
-            style={styles.input}
-            inputContainerStyle={styles.inputContainer}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                onPress={() => {
-                  console.log("yo");
-                  setSearchQuery(item);
-                }}
-                style={styles.itemText}
-                >
-                <Text>
-                    {item.title}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
-
-          <TouchableHighlight 
-            onPress={() => {
-              navigation.navigate('Food Analysis', {
-                searchQuery
-              })
-            }}
-            style={styles.button}>
-            <Text style={{color:'white'}}>I ate this</Text>
-          </TouchableHighlight>
-
+        <View style={styles.upperHalf}>
+          <View style={styles.inputContainer}>
+            <Input
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={(text)=>fetchData(text)}
+              placeholder={placeholder}
+              style={styles.input}
+            />
+          </View>
+        </View>
+         
+        <View style={styles.listContainer}>
+          <View style={styles.list}>
+              <FlatList
+                data = {foods}
+                keyExtractor = {(item, index) => index.toString()}
+                extraData = {searchQuery}
+                renderItem = {({item}) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Food Analysis', {
+                        item
+                      })
+                    }}
+                    style={styles.itemText}
+                  >
+                      <Text>
+                          {item.food_name}
+                      </Text>
+                  </TouchableOpacity>
+                  )}
+              />
+          </View>
         </View>
       </SafeAreaView>
   )
@@ -87,36 +79,39 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#3eb489',
     justifyContent:'center',
-    alignItems:'center'
   },
-  inputAndButton: {
-    zIndex:7000,
-    flexDirection: 'row',
-    position:'absolute'
+  upperHalf: {
+    flex:1
   },
   inputContainer: {
-    borderWidth: 0,
-    alignSelf: 'center'
+    flex:1,
+    position:'absolute',
+    bottom:0,
+    right:0,
+    left:0,
+    width:'100%',
+    justifyContent:'center'
   },
   input: {
     borderRadius:8,
     padding:10,
+    backgroundColor: 'white'
+  },
+  listContainer: {
+    flex:1,
+    overflow:'scroll'
+  },
+  list: {
+    borderRadius:8,
     backgroundColor: 'white',
-    borderWidth:0,
-    flex:5,
-    fontFamily: 'OpenSans_400Regular',
-    zIndex:6000
+    top:0,
+    position:'absolute',
+    left:'5%',
+    right:0,
+    width:'90%'
   },
   itemText: {
-    zIndex:7000,
-    position:'absolute'
-  },
-  button: {
-    flex:1,
     padding:10,
-    borderRadius:8,
-    backgroundColor:'#1B4E3B',
-    marginLeft:10
   }
 });
 
