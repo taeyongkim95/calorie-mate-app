@@ -7,7 +7,6 @@ const AddFoodScreen = ({navigation}) => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [foods, setFoods] = useState([]);
-  const [selectedValue, setSelectedValue] = useState({});
   const placeholder = "What did you eat?";
 
   const fetchData = (e) => {
