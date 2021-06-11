@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
   input: {
     borderRadius:8,
     padding:10,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    zIndex:3000
   },
   listContainer: {
     flex:1,

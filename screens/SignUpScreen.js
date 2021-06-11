@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableHighlight, TouchableOpacity, Alert} from "react-native";
+import { StyleSheet, View, Text, SafeAreaView, TouchableHighlight, TouchableOpacity} from "react-native";
 import { Input } from 'react-native-elements';
 import firebase from 'firebase/app';
 import 'firebase/database';
