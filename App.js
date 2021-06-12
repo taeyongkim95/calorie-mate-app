@@ -12,6 +12,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
 import AddFoodScreen from './screens/AddFoodScreen';
 import FoodAnalysisScreen from './screens/FoodAnalysisScreen';
+import TrendsScreen from './screens/TrendsScreen';
 
 export default function App() {
 
@@ -48,6 +49,7 @@ export default function App() {
           <Stack.Screen options={{ headerTitle: null}} name="Home" component={HomeScreen}/>
           <Stack.Screen options={{ headerTitle: null}} name="Add Food" component={AddFoodScreen}/>
           <Stack.Screen options={{ headerTitle: null}} name="Food Analysis" component={FoodAnalysisScreen}/>
+          <Stack.Screen options={{ headerTitle: null}} name="Trends" component={TrendsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

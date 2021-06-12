@@ -5,12 +5,14 @@ import firebase from 'firebase/app';
 import auth from 'firebase/auth';
 import { storeFoodData } from '../helper/fb-calorie-mate';
 import { Platform } from 'react-native';
+import  moment  from 'moment';
 
 const FoodAnalysisScreen = ({ navigation, route }) => {
   const [food, setFood] = useState(route.params.item);
   const [result, setResult] = useState([]);
   const [foodData, setFoodData] = useState({name: '', calories: '', date: ''});
   const [calories, setCalories] = useState('');
+  const [currentDate, setCurrentDate] = useState('');
 
   const foodName = food.food_name;
   const postData = {'query' : foodName};
@@ -28,11 +30,16 @@ const FoodAnalysisScreen = ({ navigation, route }) => {
       setCalories(response.data.foods[0].nf_calories);
       setResult(response.data.foods[0]);
     })
+
+    var date = moment().format('MM/DD/YYYY')
+    setCurrentDate(date);
+    console.log(currentDate);
   }, []);
 
   useEffect(() => {
     if (result && calories) {
-      setFoodData({name: foodName, calories: calories, date: timestamp});
+      console.log(timestamp);
+      setFoodData({name: foodName, calories: calories, date: currentDate});
       console.log(foodData);
     }
   }, [result, calories]);

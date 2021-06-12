@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { firebaseConfig } from './fb-credentials';
+import auth from 'firebase/auth';
 
 export function initCalorieMateDb() {
   firebase.initializeApp(firebaseConfig);

@@ -116,7 +116,9 @@ const styles = StyleSheet.create({
     backgroundColor:'#1B4E3B',
     padding:10,
     fontSize:18,
-    color:'white'
+    color:'white',
+    textAlign: 'center',
+    width:150
   },
   signUpText: {
     color:'white',

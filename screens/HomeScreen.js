@@ -3,6 +3,7 @@ import { StyleSheet, Text, SafeAreaView, TouchableHighlight, TouchableOpacity} f
 import firebase from 'firebase/app';
 import auth from 'firebase/auth';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -29,12 +30,16 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.welcomeMessage}>Welcome! {userName}</Text>
-      <TouchableHighlight style={styles.button} onPress={()=> navigation.navigate('Add Food')}>
-        <Text style={styles.buttonText}>I just ate</Text>
-      </TouchableHighlight>
-      <TouchableOpacity style={styles.trendButton}>
+      <Animatable.View animation="pulse" easing="ease-in-out" iterationDelay="800" delay="800" iterationCount="infinite" >
+        <TouchableHighlight style={styles.button} onPress={()=> navigation.navigate('Add Food')}>
+          <Text style={styles.buttonText}>I just ate</Text>
+        </TouchableHighlight>
+      </Animatable.View>
+
+      <TouchableOpacity style={styles.trendButton} onPress={()=> navigation.navigate('Trends')}>
         <Text style={styles.trendButtonText}>Trends</Text>
       </TouchableOpacity>
+
     </SafeAreaView>
   );
 };
@@ -44,8 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#3eb489',
     justifyContent:'center',
-    alignItems:'center',
-    fontFamily:'San Francisco'
+    alignItems:'center'
   },
   welcomeMessage: {
     color: '#fff',
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1B4E3B',
     borderRadius:8,
     padding:10,
-    minWidth:150,
+    width:150,
     marginTop:80,
     textAlign: 'center'
   },
