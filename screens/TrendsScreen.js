@@ -1,81 +1,72 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, SafeAreaView, TouchableHighlight, TouchableOpacity} from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import firebase from 'firebase/app';
 import auth from 'firebase/auth';
 import { LineChart } from 'react-native-chart-kit';
 
-const TrendsScreen = ({ navigation }) => {
-  const [foodHistory, setFoodHistory] = useState([]);
-  const [fetched, setFetched] = useState(false);
-  const [graphData, setGraphData] = useState({});
-  let xAxisArr = [];
-  let yAxisArr = [];
-  let processedData = [];
+const TrendsScreen = ({ route, navigation }) => {
+  const [foodHistory, setFoodHistory] = useState(route.params?.foodHistory);
+  const [graphData, setGraphData] = useState(route.params?.graphData);
+
+  const screenWidth = Dimensions.get("window").width;
 
   useEffect(() => {
-    var holder = {};
-    foodHistory.forEach(function(d) {
-      if (holder.hasOwnProperty(d.date)) {
-        holder[d.date] = holder[d.date] + d.calories;
-      } else {
-        holder[d.date] = d.calories;
-      }
-    });
-
-    for (var prop in holder) {
-      processedData.push({ date: prop, calories: holder[prop]});
+    if (route.params?.foodHistory) {
+      setFoodHistory(route.params.foodHistory);
     }
-
-    xAxisArr = processedData.map((item) => {
-      return item.date;
-    });
-    yAxisArr = processedData.map((item) => {
-      return item.calories;
-    });
-
-    var tempGraphData = {labels: xAxisArr, datasets: [{data: yAxisArr}]};
-    setGraphData(tempGraphData);
-  }, [foodHistory]);
-  
-  var user = firebase.auth().currentUser;
-
-  const fetchData = () => {
-    firebase.database().ref('users/' + user.uid).on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const data = snapshot.val();
-        const newArr = [];
-        Object.keys(data).map((key, index) => {
-          console.log(key, '||', index, '||', data[key]);
-          newArr.push({ ...data[key], id: key});
-        });
-        setFoodHistory(newArr);
-        setFetched(true);
-      } else {
-        setFoodHistory([]);
-      }
-    })
-  }
+    if (route.params?.graphData) {
+      setGraphData(route.params.graphData);
+    }
+  }, [route.params?.foodHistory, route.params?.graphData])
 
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
+    backgroundGradientFrom: "#fff",
+    backgroundGradientFromOpacity: 1,
+    backgroundGradientTo: "#fff",
+    backgroundGradientToOpacity: 1,
+    color: (opacity = 1) => `rgba(27, 78, 59, ${opacity})`,
+    strokeWidth: 4,
+    barPercentage: 0.3,
+    propsForLabels: {fontFamily: 'OpenSans_400Regular'},
+    decimalPlaces:0
   };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.historyItem}>  
+      <Text style={styles.historyText}>Food: {item.name}</Text>
+      <Text style={styles.historyText}>Calories: {item.calories} </Text>
+      <Text style={styles.historyDate}>Date: {item.date}</Text>
+      {item.imageURL &&
+        <TouchableOpacity onPress={()=> navigation.navigate('Image', {item})}>
+          <Text style={styles.historyPhotoText}>View your photo</Text>
+        </TouchableOpacity>
+      }
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Trends</Text>
-      <LineChart 
-        data = {graphData}
-        width = {500}
-        height = {600}
-        chartConfig = {chartConfig}
-      />
+      <View style={styles.chartContainer}>
+          <LineChart 
+            data = {graphData}
+            width = {screenWidth * 0.9}
+            height = {330}
+            chartConfig = {chartConfig}
+            fromZero = {true}
+            onDataPointClick={() => {
+              console.log('ok');
+              }
+            }
+          />
+      </View>
+      <ScrollView style={styles.historyContainer}>
+          <Text style={styles.historyHeader}>Consumption History</Text>
+          <FlatList 
+            keyExtractor = {item => item.id}
+            data = {foodHistory}
+            renderItem = {renderItem}
+          />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -85,7 +76,59 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#3eb489',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    paddingTop:50
+  },
+  dotLabel: {
+    fontSize:50
+  },
+  chartContainer: {
+    borderRadius: 8,
+    flex: 1
+  },
+  historyContainer: {
+    borderRadius: 8,
+    flex: 1,
+    width: '90%',
+    borderRadius: 8,
+    marginTop: 40,
+    marginBottom:40
+  },
+  historyHeader: {
+    fontSize:22,
+    color: 'white',
+    paddingBottom:30,
+    textAlign: 'center'
+  },
+  historyItem: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 12,
+    width: '100%',
+    borderRadius:8,
+    marginTop:10
+  },
+  historyText: {
+    fontSize:18
+  },
+  historyPhotoText: {
+    fontSize: 16,
+    color:'#1B4E3B',
+    fontWeight: 'bold',
+    textAlign:'center'
+  },
+  historyDate: {
+    textAlign: 'right',
+    fontSize: 10
+  },
+  imageContainer: {
+    height:300,
+    width:300,
+    backgroundColor:'white'
+  },
+  image: {
+    height:200,
+    width:200
   }
 });
 

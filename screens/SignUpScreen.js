@@ -123,11 +123,13 @@ const styles = StyleSheet.create({
     borderRadius:8,
     padding:18,
     marginTop:60,
-    marginBottom:20
+    marginBottom:40,
+    width: '75%',
   },
   input: {
     padding:8,
-    borderRadius:8
+    fontSize:16,
+    maxWidth:300
   },
   errorLabelContainer: {
     backgroundColor: 'white',

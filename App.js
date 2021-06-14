@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavigationContainer, StackActions} from '@react-navigation/native';
 import { createStackNavigator} from '@react-navigation/stack';
 import {setCustomText} from 'react-native-global-props';
-import { useFonts, OpenSans_400Regular} from '@expo-google-fonts/open-sans';
+import * as Font from 'expo-font';
 import { initCalorieMateDb } from './helper/fb-calorie-mate';
 import firebase from 'firebase/app';
 import auth from 'firebase/auth';
@@ -13,28 +13,34 @@ import HomeScreen from './screens/HomeScreen';
 import AddFoodScreen from './screens/AddFoodScreen';
 import FoodAnalysisScreen from './screens/FoodAnalysisScreen';
 import TrendsScreen from './screens/TrendsScreen';
+import ImageScreen from './screens/ImageScreen';
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  let [fontsLoaded] = useFonts({
-    OpenSans_400Regular,
-  });
+  async function loadFonts() {
+    await Font.loadAsync({
+      OpenSans: require('./assets/fonts/OpenSans-Regular.ttf')
+    });
+    setFontsLoaded(true);
+  }
 
   const customTextProps = {
     style: {
-      fontFamily: 'OpenSans_400Regular'
+      fontFamily: 'OpenSans'
     }
   }
 
   useEffect(() => {
     try {
       initCalorieMateDb();
+      loadFonts();
+      setCustomText(customTextProps);
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-  setCustomText(customTextProps);
 
   const Stack = createStackNavigator();
 
@@ -49,7 +55,8 @@ export default function App() {
           <Stack.Screen options={{ headerTitle: null}} name="Home" component={HomeScreen}/>
           <Stack.Screen options={{ headerTitle: null}} name="Add Food" component={AddFoodScreen}/>
           <Stack.Screen options={{ headerTitle: null}} name="Food Analysis" component={FoodAnalysisScreen}/>
-          <Stack.Screen options={{ headerTitle: null}} name="Trends" component={TrendsScreen}/>
+          <Stack.Screen options={{ headerTitleAlign: 'center'}} name="Trends" component={TrendsScreen}/>
+          <Stack.Screen options={{ headerTitle: null}} name="Image" component={ImageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,6 +6,57 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
 const HomeScreen = ({ navigation }) => {
+  const [foodHistory, setFoodHistory] = useState([]);
+  const [graphData, setGraphData] = useState({});
+  let xAxisArr = [];
+  let yAxisArr = [];
+  let processedData = [];
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    var holder = {};
+    foodHistory.forEach(function(d) {
+      if (holder.hasOwnProperty(d.date)) {
+        holder[d.date] = holder[d.date] + d.calories;
+      } else {
+        holder[d.date] = d.calories;
+      }
+    });
+
+    for (var prop in holder) {
+      processedData.push({ date: prop, calories: holder[prop]});
+    }
+
+    xAxisArr = processedData.map((item) => {
+      return item.date;
+    });
+    yAxisArr = processedData.map((item) => {
+      return item.calories;
+    });
+
+    var tempGraphData = {labels: xAxisArr, datasets: [{data: yAxisArr}]};
+    setGraphData(tempGraphData);
+  }, [foodHistory]);
+  
+  var user = firebase.auth().currentUser;
+
+  const fetchData = () => {
+    firebase.database().ref('users/' + user.uid).on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const data = snapshot.val();
+        const newArr = [];
+        Object.keys(data).map((key, index) => {
+          newArr.push({ ...data[key], id: key});
+        });
+        setFoodHistory(newArr);
+      } else {
+        setFoodHistory([]);
+      }
+    })
+  }
 
   var userName = firebase.auth().currentUser.displayName;
 
@@ -30,13 +81,13 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.welcomeMessage}>Welcome! {userName}</Text>
-      <Animatable.View animation="pulse" easing="ease-in-out" iterationDelay="800" delay="800" iterationCount="infinite" >
+      <Animatable.View animation="pulse" easing="ease-in-out" iterationCount="infinite" >
         <TouchableHighlight style={styles.button} onPress={()=> navigation.navigate('Add Food')}>
           <Text style={styles.buttonText}>I just ate</Text>
         </TouchableHighlight>
       </Animatable.View>
 
-      <TouchableOpacity style={styles.trendButton} onPress={()=> navigation.navigate('Trends')}>
+      <TouchableOpacity style={styles.trendButton} onPress={()=> navigation.navigate('Trends', {foodHistory, graphData})}>
         <Text style={styles.trendButtonText}>Trends</Text>
       </TouchableOpacity>
 
@@ -77,8 +128,13 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   trendButtonText: {
-    color: '#fff'
+    color: '#fff',
+    textAlign: 'center'
   }
 });
 
 export default HomeScreen;
+
+function round(value, decimals) {
+  return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+}
