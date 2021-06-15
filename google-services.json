@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "420087331457",
+    "firebase_url": "https://calorie-mate-default-rtdb.firebaseio.com",
+    "project_id": "calorie-mate",
+    "storage_bucket": "calorie-mate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420087331457:android:edea712f20de92a0a0eb80",
+        "android_client_info": {
+          "package_name": "gvsu.taeyongkim.caloriemate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420087331457-u4jok285vu57ugrm4nijhpr2ar9sta13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqkxmugWqYRmNTfFvsyJdy6CbxL0O13zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420087331457-u4jok285vu57ugrm4nijhpr2ar9sta13.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "420087331457-msq7fuu5rr4u8tt4hgh6iekbldmrgith.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "gvsu.taeyongkim.caloriemate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

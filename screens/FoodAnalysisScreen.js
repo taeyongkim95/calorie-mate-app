@@ -68,9 +68,10 @@ const FoodAnalysisScreen = ({ navigation, route }) => {
     .then((response)=> {
       setCalories(response.data.foods[0].nf_calories);
       setResult(response.data.foods[0]);
-      setImage(response.data.foods[0].photo.thumb)
+      setImage(food.photo.thumb);
     })
 
+    console.log(food.photo.thumb);
     var date = moment().format('MM/DD/YYYY');
     setCurrentDate(date);
   }, []);
@@ -88,7 +89,7 @@ const FoodAnalysisScreen = ({ navigation, route }) => {
  
   return (
     <SafeAreaView style={styles.container}>
-        <Image style={styles.image} source={image} />
+        <Image resizeMode="contain" style={styles.image} source={{uri: image}} />
         <TouchableOpacity style={styles.cameraButton} onPress={pickImage}>
           <Text style={styles.text}>Take your own photo</Text>
         </TouchableOpacity>
@@ -119,22 +120,22 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   cameraButton: {
-    borderRadius:8,
+    borderRadius:12,
     backgroundColor:'#1B4E3B',
     padding:10,
     marginTop:20,
     marginBottom:40
   },
   image: {
-    width:100,
-    height:100
+    width:150,
+    height:150
   },
   text: {
     color:'white',
     fontSize:18
   },
   button: {
-    borderRadius:8,
+    borderRadius:12,
     backgroundColor:'#1B4E3B',
     padding:10,
     marginTop:20

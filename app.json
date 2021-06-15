@@ -17,16 +17,35 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "gvsu.taeyongkim.caloriemate",
+      "buildNumber": "1.0.0",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "package": "gvsu.taeyongkim.caloriemate",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyA9vYtlZ8WBXcSgCVAKt8Xe6nEHrQDue04",
+          "authDomain": "calorie-mate.firebaseapp.com",
+          "databaseURL": "https://calorie-mate-default-rtdb.firebaseio.com",
+          "projectId": "calorie-mate",
+          "storageBucket": "calorie-mate.appspot.com",
+          "messagingSenderId": "420087331457",
+          "appId": "1:420087331457:web:814c832af0732aa3a0eb80",
+          "measurementId": "G-6WNSW5W8ZE"
+        }
+      }
+    },
+    "description": ""
   }
 }

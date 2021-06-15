@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   trendButton: {
     backgroundColor: '#1B4E3B',
-    borderRadius:8,
+    borderRadius:12,
     padding:10,
     width:150,
     marginTop:80,

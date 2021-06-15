@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   input: {
-    borderRadius:8,
+    borderRadius:12,
     padding:10,
     backgroundColor: 'white',
     zIndex:3000
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     overflow:'scroll'
   },
   list: {
-    borderRadius:8,
+    borderRadius:12,
     backgroundColor: 'white',
     top:0,
     position:'absolute',

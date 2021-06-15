@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import { initCalorieMateDb } from './helper/fb-calorie-mate';
 import firebase from 'firebase/app';
 import auth from 'firebase/auth';
+import * as Analytics from 'expo-firebase-analytics';
 
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -15,7 +16,17 @@ import FoodAnalysisScreen from './screens/FoodAnalysisScreen';
 import TrendsScreen from './screens/TrendsScreen';
 import ImageScreen from './screens/ImageScreen';
 
+const getActiveRouteName = state => {
+  const route = state.routes[state.index];
+  if (route.state) {
+    return getActiveRouteName(route.state);
+  }
+  return route.name;
+};
+
 export default function App() {
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   async function loadFonts() {
@@ -39,13 +50,28 @@ export default function App() {
     } catch (err) {
       console.log(err);
     }
+
+    
+    const state = navigationRef.current.getRootState();
+
+    // Save the initial route name
+    routeNameRef.current = getActiveRouteName(state);
   }, []);
 
 
   const Stack = createStackNavigator();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={(state) => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = getActiveRouteName(state);
+        if (previousRouteName !== currentRouteName) {
+          Analytics.setCurrentScreen(currentRouteName, currentRouteName);
+        }
+      }}
+    >
       <Stack.Navigator
         screenOptions={{
           padding:8

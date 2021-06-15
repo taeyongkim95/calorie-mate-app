@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>420087331457-msq7fuu5rr4u8tt4hgh6iekbldmrgith.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.420087331457-msq7fuu5rr4u8tt4hgh6iekbldmrgith</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCZhxf9wmBci5kAvDnGF5q0f-ME5yidOrI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>420087331457</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>gvsu.taeyongkim.caloriemate</string>
+	<key>PROJECT_ID</key>
+	<string>calorie-mate</string>
+	<key>STORAGE_BUCKET</key>
+	<string>calorie-mate.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:420087331457:ios:a760cd9642be236ea0eb80</string>
+	<key>DATABASE_URL</key>
+	<string>https://calorie-mate-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

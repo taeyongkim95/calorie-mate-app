@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: 'white',
-    borderRadius:8,
+    borderRadius:12,
     padding:18,
     marginTop:60,
     marginBottom:40,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   errorLabelContainer: {
     backgroundColor: 'white',
-    borderRadius:8,
+    borderRadius:12,
     padding:10,
     marginBottom:20
   },
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     color:'red'
   },
   signInButtonText: {
-    borderRadius:8,
+    borderRadius:12,
     backgroundColor:'#1B4E3B',
     padding:10,
     fontSize:18,

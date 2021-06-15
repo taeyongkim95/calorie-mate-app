@@ -53,9 +53,10 @@ const TrendsScreen = ({ route, navigation }) => {
             height = {330}
             chartConfig = {chartConfig}
             fromZero = {true}
-            onDataPointClick={() => {
-              console.log('ok');
-              }
+            renderDotContent={({x, y, index, indexData}) => 
+              <Text key={x + y} style={{fontSize:10, position:'absolute', top: y - 8, left:x + 8}}>
+                {round(indexData, 0)} cal
+              </Text>
             }
           />
       </View>
@@ -83,14 +84,13 @@ const styles = StyleSheet.create({
     fontSize:50
   },
   chartContainer: {
-    borderRadius: 8,
+    borderRadius: 12,
     flex: 1
   },
   historyContainer: {
-    borderRadius: 8,
     flex: 1,
     width: '90%',
-    borderRadius: 8,
+    borderRadius: 12,
     marginTop: 40,
     marginBottom:40
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 12,
     width: '100%',
-    borderRadius:8,
+    borderRadius: 12,
     marginTop:10
   },
   historyText: {
@@ -120,16 +120,11 @@ const styles = StyleSheet.create({
   historyDate: {
     textAlign: 'right',
     fontSize: 10
-  },
-  imageContainer: {
-    height:300,
-    width:300,
-    backgroundColor:'white'
-  },
-  image: {
-    height:200,
-    width:200
   }
 });
 
 export default TrendsScreen;
+
+function round(value, decimals) {
+  return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+}
