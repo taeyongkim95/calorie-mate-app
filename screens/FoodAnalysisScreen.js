@@ -70,8 +70,7 @@ const FoodAnalysisScreen = ({ navigation, route }) => {
       setResult(response.data.foods[0]);
       setImage(food.photo.thumb);
     })
-
-    console.log(food.photo.thumb);
+    
     var date = moment().format('MM/DD/YYYY');
     setCurrentDate(date);
   }, []);

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity} from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ScrollView} from "react-native";
 import { Input } from 'react-native-elements';
 import { FoodServer } from '../api/FoodServer';
 
@@ -49,10 +49,14 @@ const AddFoodScreen = ({navigation}) => {
         <View style={styles.listContainer}>
           <View style={styles.list}>
               <FlatList
+              keyboardShouldPersistTaps='always'
                 data = {foods}
                 keyExtractor = {(item, index) => index.toString()}
                 extraData = {searchQuery}
                 renderItem = {({item}) => (
+                  <View onStartShouldSetResponder={() => {
+                    return true;
+                  }}>
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('Food Analysis', {
@@ -65,6 +69,7 @@ const AddFoodScreen = ({navigation}) => {
                           {item.food_name}
                       </Text>
                   </TouchableOpacity>
+                  </View>
                   )}
               />
           </View>
@@ -99,7 +104,8 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex:1,
-    overflow:'scroll'
+    overflow:'scroll',
+    zIndex:6000
   },
   list: {
     borderRadius:12,
@@ -112,6 +118,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     padding:10,
+    zIndex:6000
   }
 });
 

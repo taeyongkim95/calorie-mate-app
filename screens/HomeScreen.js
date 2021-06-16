@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.welcomeMessage}>Welcome! {userName}</Text>
+      <Text style={styles.welcomeMessage}>Welcome to Calorie-Mate! {userName}</Text>
       <Animatable.View animation="pulse" easing="ease-in-out" iterationCount="infinite" >
         <TouchableHighlight style={styles.button} onPress={()=> navigation.navigate('Add Food')}>
           <Text style={styles.buttonText}>I just ate</Text>

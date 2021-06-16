@@ -59,6 +59,8 @@ export default function App() {
   }, []);
 
 
+  console.ignoredYellowBox = ['Setting a timer'];
+  
   const Stack = createStackNavigator();
 
   return (

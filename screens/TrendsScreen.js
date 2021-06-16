@@ -27,7 +27,7 @@ const TrendsScreen = ({ route, navigation }) => {
     color: (opacity = 1) => `rgba(27, 78, 59, ${opacity})`,
     strokeWidth: 4,
     barPercentage: 0.3,
-    propsForLabels: {fontFamily: 'OpenSans_400Regular'},
+    propsForLabels: {fontFamily: 'OpenSans_400Regular', fontSize: 8},
     decimalPlaces:0
   };
 
@@ -50,7 +50,7 @@ const TrendsScreen = ({ route, navigation }) => {
           <LineChart 
             data = {graphData}
             width = {screenWidth * 0.9}
-            height = {330}
+            height = {300}
             chartConfig = {chartConfig}
             fromZero = {true}
             renderDotContent={({x, y, index, indexData}) => 
@@ -78,17 +78,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#3eb489',
     justifyContent:'center',
     alignItems:'center',
-    paddingTop:50
+    paddingTop:30
   },
   dotLabel: {
     fontSize:50
   },
   chartContainer: {
-    borderRadius: 12,
-    flex: 1
+    borderRadius: 12
   },
   historyContainer: {
-    flex: 1,
     width: '90%',
     borderRadius: 12,
     marginTop: 40,
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
   historyHeader: {
     fontSize:22,
     color: 'white',
-    paddingBottom:30,
+    paddingBottom:20,
     textAlign: 'center'
   },
   historyItem: {
@@ -109,10 +107,10 @@ const styles = StyleSheet.create({
     marginTop:10
   },
   historyText: {
-    fontSize:18
+    fontSize:16
   },
   historyPhotoText: {
-    fontSize: 16,
+    fontSize: 18,
     color:'#1B4E3B',
     fontWeight: 'bold',
     textAlign:'center'
